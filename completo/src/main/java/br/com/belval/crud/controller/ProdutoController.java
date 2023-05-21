@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.belval.crud.model.Produto;
 
@@ -22,9 +23,9 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/produto/novo")
-	public ModelAndView novo(Produto produto) {
-		ModelAndView modelAndView = new ModelAndView("novo-produto-criado");
-		modelAndView.addObject("novoProduto", produto);
+	public ModelAndView novo(Produto produto, RedirectAttributes redirectAttributes) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/produto/list");
+		redirectAttributes.addFlashAttribute("msg", "Novo produto criado!");
 		produto.setId(proxId++);
 		listaProdutos.add(produto);
 		return modelAndView;
@@ -36,5 +37,4 @@ public class ProdutoController {
 		modelAndView.addObject("produtos", listaProdutos);
 		return modelAndView;
 	}
-
 }
